@@ -58,20 +58,6 @@
             ]
         },
         {
-            "name": "prescale",
-            "size": "16",
-            "mode": "rw",
-            "init": "0",
-            "fields": [
-                {
-                    "name": "prescale",
-                    "from": "0",
-                    "size": "16",
-                    "port": "prescale"
-                }
-            ]
-        },
-        {
             "name": "control",
             "size": "5",
             "mode": "rw",
@@ -106,6 +92,20 @@
                     "from": "4",
                     "size": "1",
                     "port": "glitch_filter_en"
+                }
+            ]
+        },
+        {
+            "name": "prescaler",
+            "size": "16",
+            "mode": "rw",
+            "init": "0",
+            "fields": [
+                {
+                    "name": "prescaler",
+                    "from": "0",
+                    "size": "16",
+                    "port": "prescaler"
                 }
             ]
         },
@@ -162,21 +162,15 @@
             ]
         },
         {
-            "name": "fifo_status",
-            "size": "16",
+            "name": "rx_level",
+            "size": "8",
             "mode": "ro",
             "fields": [
                 {
-                    "name": "rx_level",
+                    "name": "level",
                     "from": "0",
                     "size": "4",
                     "port": "rx_level"
-                },
-                {
-                    "name": "tx_level",
-                    "from": "8",
-                    "size": "4",
-                    "port": "tx_level"
                 }
             ]
         },
@@ -193,18 +187,31 @@
                     "port": "match_data"
                 }
             ]
+        },
+        {
+            "name": "tx_level",
+            "size": "8",
+            "mode": "ro",
+            "fields": [
+                {
+                    "name": "level",
+                    "from": "0",
+                    "size": "4",
+                    "port": "tx_level"
+                }
+            ]
         }
     ],
     "interface": [
         {
-            "name": "RX",
-            "port": "RX",
+            "name": "rx",
+            "port": "rx",
             "dir": "input",
             "size": "1"
         },
         {
-            "name": "TX",
-            "port": "TX",
+            "name": "tx",
+            "port": "tx",
             "dir": "output",
             "size": "1"
         }
@@ -257,7 +264,7 @@
         "pol": "0"
     },
     "ports":[
-      {"name": "prescale", "size": "16"},
+      {"name": "prescaler", "size": "16"},
       {"name": "en", "size": "1"},
       {"name": "tx_en", "size": "1"},
       {"name": "rx_en", "size": "1"},
@@ -274,11 +281,9 @@
       {"name": "loopback_en", "size": "1"},
       {"name": "glitch_filter_en", "size": "1"},
       {"name": "tx_empty", "size": "1"},
-      {"name": "tx_full", "size": "1"},
       {"name": "tx_level", "size": "4"},
       {"name": "tx_level_below", "size": "1"},
       {"name": "rdata", "size": "9"},
-      {"name": "rx_empty", "size": "1"},
       {"name": "rx_full", "size": "1"},
       {"name": "rx_level", "size": "4"},
       {"name": "rx_level_above", "size": "1"},

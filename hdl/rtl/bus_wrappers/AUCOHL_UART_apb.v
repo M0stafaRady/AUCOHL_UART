@@ -29,8 +29,8 @@
 `define		APB_ICR(size)				`APB_BLOCK(ICR_REG, ``size``'b0) else if(apb_we & (PADDR[15:0]==ICR_REG_ADDR)) ICR_REG <= PWDATA[``size``-1:0]; else ICR_REG <= ``size``'d0;
 
 module AUCOHL_UART_apb (
-	input	wire 		RX,
-	output	wire 		TX,
+	input	wire 		rx,
+	output	wire 		tx,
 	input	wire 		PCLK,
 	input	wire 		PRESETn,
 	input	wire [31:0]	PADDR,
@@ -44,20 +44,21 @@ module AUCOHL_UART_apb (
 );
 	localparam[15:0] RXDATA_REG_ADDR = 16'h0000;
 	localparam[15:0] TXDATA_REG_ADDR = 16'h0004;
-	localparam[15:0] PRESCALE_REG_ADDR = 16'h0008;
-	localparam[15:0] CONTROL_REG_ADDR = 16'h000c;
+	localparam[15:0] CONTROL_REG_ADDR = 16'h0008;
+	localparam[15:0] PRESCALER_REG_ADDR = 16'h000c;
 	localparam[15:0] CONFIG_REG_ADDR = 16'h0010;
 	localparam[15:0] FIFO_CONTROL_REG_ADDR = 16'h0014;
-	localparam[15:0] FIFO_STATUS_REG_ADDR = 16'h0018;
+	localparam[15:0] RX_LEVEL_REG_ADDR = 16'h0018;
 	localparam[15:0] MATCH_REG_ADDR = 16'h001c;
+	localparam[15:0] TX_LEVEL_REG_ADDR = 16'h0020;
 	localparam[15:0] ICR_REG_ADDR = 16'h0f00;
 	localparam[15:0] RIS_REG_ADDR = 16'h0f04;
 	localparam[15:0] IM_REG_ADDR = 16'h0f08;
 	localparam[15:0] MIS_REG_ADDR = 16'h0f0c;
 	localparam[15:0] CG_REG_ADDR = 16'h0f80;
 
-	reg	[15:0]	PRESCALE_REG;
 	reg	[4:0]	CONTROL_REG;
+	reg	[15:0]	PRESCALER_REG;
 	reg	[13:0]	CONFIG_REG;
 	reg	[15:0]	FIFO_CONTROL_REG;
 	reg	[8:0]	MATCH_REG;
@@ -68,12 +69,12 @@ module AUCOHL_UART_apb (
 
 	wire[8:0]	rdata;
 	wire[8:0]	RXDATA_REG	= rdata;
-	wire[15:0]	prescale	= PRESCALE_REG[15:0];
 	wire		en	= CONTROL_REG[0:0];
 	wire		tx_en	= CONTROL_REG[1:1];
 	wire		rx_en	= CONTROL_REG[2:2];
 	wire		loopback_en	= CONTROL_REG[3:3];
 	wire		glitch_filter_en	= CONTROL_REG[4:4];
+	wire[15:0]	prescaler	= PRESCALER_REG[15:0];
 	wire[3:0]	data_size	= CONFIG_REG[3:0];
 	wire		stop_bits_count	= CONFIG_REG[4:4];
 	wire[2:0]	parity_type	= CONFIG_REG[7:5];
@@ -81,8 +82,10 @@ module AUCOHL_UART_apb (
 	wire[3:0]	txfifotr	= FIFO_CONTROL_REG[3:0];
 	wire[3:0]	rxfifotr	= FIFO_CONTROL_REG[11:8];
 	wire[3:0]	rx_level;
-	wire[15:0]	FIFO_STATUS_REG	= rx_level;
+	wire[7:0]	RX_LEVEL_REG	= rx_level;
 	wire[8:0]	match_data	= MATCH_REG[8:0];
+	wire[3:0]	tx_level;
+	wire[7:0]	TX_LEVEL_REG	= tx_level;
 	wire		tx_empty;
 	wire		_TX_EMPTY_FLAG_	= tx_empty;
 	wire		rx_full;
@@ -119,7 +122,7 @@ module AUCOHL_UART_apb (
 	AUCOHL_UART inst_to_wrap (
 		.clk(_gclk_),
 		.rst_n(~_rst_),
-		.prescale(prescale),
+		.prescaler(prescaler),
 		.en(en),
 		.tx_en(tx_en),
 		.rx_en(rx_en),
@@ -136,11 +139,9 @@ module AUCOHL_UART_apb (
 		.loopback_en(loopback_en),
 		.glitch_filter_en(glitch_filter_en),
 		.tx_empty(tx_empty),
-		.tx_full(tx_full),
 		.tx_level(tx_level),
 		.tx_level_below(tx_level_below),
 		.rdata(rdata),
-		.rx_empty(rx_empty),
 		.rx_full(rx_full),
 		.rx_level(rx_level),
 		.rx_level_above(rx_level_above),
@@ -154,8 +155,8 @@ module AUCOHL_UART_apb (
 		.tx(tx)
 	);
 
-	`APB_REG(PRESCALE_REG, 0, 16)
 	`APB_REG(CONTROL_REG, 0, 5)
+	`APB_REG(PRESCALER_REG, 0, 16)
 	`APB_REG(CONFIG_REG, 0, 14)
 	`APB_REG(FIFO_CONTROL_REG, 0, 16)
 	`APB_REG(MATCH_REG, 0, 9)
@@ -183,8 +184,8 @@ module AUCOHL_UART_apb (
 	assign irq = |MIS_REG;
 
 	assign	PRDATA = 
-			(PADDR[15:0] == PRESCALE_REG_ADDR) ? PRESCALE_REG :
 			(PADDR[15:0] == CONTROL_REG_ADDR) ? CONTROL_REG :
+			(PADDR[15:0] == PRESCALER_REG_ADDR) ? PRESCALER_REG :
 			(PADDR[15:0] == CONFIG_REG_ADDR) ? CONFIG_REG :
 			(PADDR[15:0] == FIFO_CONTROL_REG_ADDR) ? FIFO_CONTROL_REG :
 			(PADDR[15:0] == MATCH_REG_ADDR) ? MATCH_REG :
@@ -193,7 +194,8 @@ module AUCOHL_UART_apb (
 			(PADDR[15:0] == IM_REG_ADDR) ? IM_REG :
 			(PADDR[15:0] == CG_REG_ADDR) ? CG_REG :
 			(PADDR[15:0] == RXDATA_REG_ADDR) ? RXDATA_REG :
-			(PADDR[15:0] == FIFO_STATUS_REG_ADDR) ? FIFO_STATUS_REG :
+			(PADDR[15:0] == RX_LEVEL_REG_ADDR) ? RX_LEVEL_REG :
+			(PADDR[15:0] == TX_LEVEL_REG_ADDR) ? TX_LEVEL_REG :
 			(PADDR[15:0] == MIS_REG_ADDR) ? MIS_REG :
 			32'hDEADBEEF;
 
