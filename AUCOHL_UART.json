@@ -211,43 +211,43 @@
     ],
     "flags": [
         {
-            "name": "tx_empty_flag",
+            "name": "tx_empty",
             "port": "tx_empty"
         },
         {
-            "name": "rx_full_flag",
+            "name": "rx_full",
             "port": "rx_full"
         },
         {
-            "name": "tx_below_flag",
+            "name": "tx_level_below",
             "port": "tx_level_below"
         },
         {
-            "name": "rx_above_flag",
+            "name": "rx_level_above",
             "port": "rx_level_above"
         },
         {
-            "name": "line_break_flag",
+            "name": "line_break",
             "port": "break_flag"
         },
         {
-            "name": "match_flag",
+            "name": "match",
             "port": "match_flag"
         },
         {
-            "name": "frame_error_flag",
+            "name": "frame_error",
             "port": "frame_error_flag"
         },
         {
-            "name": "parity_error_flag",
+            "name": "parity_error",
             "port": "parity_error_flag"
         },
         {
-            "name": "overrun_flag",
+            "name": "overrun",
             "port": "overrun_flag"
         },
         {
-            "name": "timeout_flag",
+            "name": "timeout",
             "port": "timeout_flag"
         }
     ],

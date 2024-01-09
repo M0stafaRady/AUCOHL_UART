@@ -84,25 +84,25 @@ module AUCOHL_UART_apb (
 	wire[15:0]	FIFO_STATUS_REG	= rx_level;
 	wire[8:0]	match_data	= MATCH_REG[8:0];
 	wire		tx_empty;
-	wire		_TX_EMPTY_FLAG_FLAG_	= tx_empty;
+	wire		_TX_EMPTY_FLAG_	= tx_empty;
 	wire		rx_full;
-	wire		_RX_FULL_FLAG_FLAG_	= rx_full;
+	wire		_RX_FULL_FLAG_	= rx_full;
 	wire		tx_level_below;
-	wire		_TX_BELOW_FLAG_FLAG_	= tx_level_below;
+	wire		_TX_LEVEL_BELOW_FLAG_	= tx_level_below;
 	wire		rx_level_above;
-	wire		_RX_ABOVE_FLAG_FLAG_	= rx_level_above;
+	wire		_RX_LEVEL_ABOVE_FLAG_	= rx_level_above;
 	wire		break_flag;
-	wire		_LINE_BREAK_FLAG_FLAG_	= break_flag;
+	wire		_LINE_BREAK_FLAG_	= break_flag;
 	wire		match_flag;
-	wire		_MATCH_FLAG_FLAG_	= match_flag;
+	wire		_MATCH_FLAG_	= match_flag;
 	wire		frame_error_flag;
-	wire		_FRAME_ERROR_FLAG_FLAG_	= frame_error_flag;
+	wire		_FRAME_ERROR_FLAG_	= frame_error_flag;
 	wire		parity_error_flag;
-	wire		_PARITY_ERROR_FLAG_FLAG_	= parity_error_flag;
+	wire		_PARITY_ERROR_FLAG_	= parity_error_flag;
 	wire		overrun_flag;
-	wire		_OVERRUN_FLAG_FLAG_	= overrun_flag;
+	wire		_OVERRUN_FLAG_	= overrun_flag;
 	wire		timeout_flag;
-	wire		_TIMEOUT_FLAG_FLAG_	= timeout_flag;
+	wire		_TIMEOUT_FLAG_	= timeout_flag;
 	wire[9:0]	MIS_REG	= RIS_REG & IM_REG;
 	wire		apb_valid	= PSEL & PENABLE;
 	wire		apb_we	= PWRITE & apb_valid;
@@ -167,16 +167,16 @@ module AUCOHL_UART_apb (
 	always @(posedge PCLK or negedge PRESETn)
 		if(~PRESETn) RIS_REG <= 10'd0;
 		else begin
-			if(_TX_EMPTY_FLAG_FLAG_) RIS_REG[0] <= 1'b1; else if(ICR_REG[0]) RIS_REG[0] <= 1'b0;
-			if(_RX_FULL_FLAG_FLAG_) RIS_REG[1] <= 1'b1; else if(ICR_REG[1]) RIS_REG[1] <= 1'b0;
-			if(_TX_BELOW_FLAG_FLAG_) RIS_REG[2] <= 1'b1; else if(ICR_REG[2]) RIS_REG[2] <= 1'b0;
-			if(_RX_ABOVE_FLAG_FLAG_) RIS_REG[3] <= 1'b1; else if(ICR_REG[3]) RIS_REG[3] <= 1'b0;
-			if(_LINE_BREAK_FLAG_FLAG_) RIS_REG[4] <= 1'b1; else if(ICR_REG[4]) RIS_REG[4] <= 1'b0;
-			if(_MATCH_FLAG_FLAG_) RIS_REG[5] <= 1'b1; else if(ICR_REG[5]) RIS_REG[5] <= 1'b0;
-			if(_FRAME_ERROR_FLAG_FLAG_) RIS_REG[6] <= 1'b1; else if(ICR_REG[6]) RIS_REG[6] <= 1'b0;
-			if(_PARITY_ERROR_FLAG_FLAG_) RIS_REG[7] <= 1'b1; else if(ICR_REG[7]) RIS_REG[7] <= 1'b0;
-			if(_OVERRUN_FLAG_FLAG_) RIS_REG[8] <= 1'b1; else if(ICR_REG[8]) RIS_REG[8] <= 1'b0;
-			if(_TIMEOUT_FLAG_FLAG_) RIS_REG[9] <= 1'b1; else if(ICR_REG[9]) RIS_REG[9] <= 1'b0;
+			if(_TX_EMPTY_FLAG_) RIS_REG[0] <= 1'b1; else if(ICR_REG[0]) RIS_REG[0] <= 1'b0;
+			if(_RX_FULL_FLAG_) RIS_REG[1] <= 1'b1; else if(ICR_REG[1]) RIS_REG[1] <= 1'b0;
+			if(_TX_LEVEL_BELOW_FLAG_) RIS_REG[2] <= 1'b1; else if(ICR_REG[2]) RIS_REG[2] <= 1'b0;
+			if(_RX_LEVEL_ABOVE_FLAG_) RIS_REG[3] <= 1'b1; else if(ICR_REG[3]) RIS_REG[3] <= 1'b0;
+			if(_LINE_BREAK_FLAG_) RIS_REG[4] <= 1'b1; else if(ICR_REG[4]) RIS_REG[4] <= 1'b0;
+			if(_MATCH_FLAG_) RIS_REG[5] <= 1'b1; else if(ICR_REG[5]) RIS_REG[5] <= 1'b0;
+			if(_FRAME_ERROR_FLAG_) RIS_REG[6] <= 1'b1; else if(ICR_REG[6]) RIS_REG[6] <= 1'b0;
+			if(_PARITY_ERROR_FLAG_) RIS_REG[7] <= 1'b1; else if(ICR_REG[7]) RIS_REG[7] <= 1'b0;
+			if(_OVERRUN_FLAG_) RIS_REG[8] <= 1'b1; else if(ICR_REG[8]) RIS_REG[8] <= 1'b0;
+			if(_TIMEOUT_FLAG_) RIS_REG[9] <= 1'b1; else if(ICR_REG[9]) RIS_REG[9] <= 1'b0;
 
 		end
 
