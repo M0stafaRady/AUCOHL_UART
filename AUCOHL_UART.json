@@ -1,10 +1,10 @@
 {
     "info": {
         "name": "AUCOHL_UART",
-        "description": "UART with a programmable baud rate generator and RX/TX FIFOs",
+        "description": "A Universal Asynchronous Receiver Transmitter",
         "repo": "https://github.com/shalan/AUCOHL_UART",
-        "owner": "Efabless Corp.",
-        "license": "APACHE 2.0",
+        "owner": "AUCOHL",
+        "license": "MIT",
         "author": "Mohamed Shalan",
         "email": "mshalan@efabless.com",
         "version": "v1.0.0",
@@ -12,14 +12,15 @@
         "category": "digital",
         "tags": [
             "peripheral",
-            "comm"
+            "UART",
+            "serial"
         ],
         "bus": [
             "generic"
         ],
         "type": "soft",
         "status": "verified",
-        "cell_count": "1057",
+        "cell_count": "690",
         "width": "0.0",
         "height": "0.0",
         "technology": "n/a",
