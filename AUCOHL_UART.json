@@ -1,0 +1,314 @@
+{
+    "info": {
+        "name": "AUCOHL_UART",
+        "description": "UART with a programmable baud rate generator and RX/TX FIFOs",
+        "repo": "https://github.com/shalan/AUCOHL_UART",
+        "owner": "Efabless Corp.",
+        "license": "APACHE 2.0",
+        "author": "Mohamed Shalan",
+        "email": "mshalan@efabless.com",
+        "version": "v1.0.0",
+        "date": "9-1-2024",
+        "category": "digital",
+        "tags": [
+            "peripheral",
+            "comm"
+        ],
+        "bus": [
+            "generic"
+        ],
+        "type": "soft",
+        "status": "verified",
+        "cell_count": "1057",
+        "width": "0.0",
+        "height": "0.0",
+        "technology": "n/a",
+        "clock_freq_mhz": "10",
+        "supply_voltage": [
+            "n/a"
+        ]
+    },
+    "regs": [
+        {
+            "name": "rxdata",
+            "size": "9",
+            "mode": "fr",
+            "init": "0",
+            "fields": [
+                {
+                    "name": "rdata",
+                    "from": "0",
+                    "size": "9",
+                    "port": "rdata"
+                }
+            ]
+        },
+        {
+            "name": "txdata",
+            "size": "9",
+            "mode": "fw",
+            "init": "0",
+            "fields": [
+                {
+                    "name": "wdata",
+                    "from": "0",
+                    "size": "9",
+                    "port": "wdata"
+                }
+            ]
+        },
+        {
+            "name": "prescale",
+            "size": "16",
+            "mode": "rw",
+            "init": "0",
+            "fields": [
+                {
+                    "name": "prescale",
+                    "from": "0",
+                    "size": "16",
+                    "port": "prescale"
+                }
+            ]
+        },
+        {
+            "name": "control",
+            "size": "5",
+            "mode": "rw",
+            "init": "0",
+            "fields": [
+                {
+                    "name": "en",
+                    "from": "0",
+                    "size": "1",
+                    "port": "en"
+                },
+                {
+                    "name": "txen",
+                    "from": "1",
+                    "size": "1",
+                    "port": "tx_en"
+                },
+                {
+                    "name": "rxen",
+                    "from": "2",
+                    "size": "1",
+                    "port": "rx_en"
+                },
+                {
+                    "name": "lpen",
+                    "from": "3",
+                    "size": "1",
+                    "port": "loopback_en"
+                },
+                {
+                    "name": "gfen",
+                    "from": "4",
+                    "size": "1",
+                    "port": "glitch_filter_en"
+                }
+            ]
+        },
+        {
+            "name": "config",
+            "size": "14",
+            "mode": "rw",
+            "init": "0",
+            "fields": [
+                {
+                    "name": "wlen",
+                    "from": "0",
+                    "size": "4",
+                    "port": "data_size"
+                },
+                {
+                    "name": "stp2",
+                    "from": "4",
+                    "size": "1",
+                    "port": "stop_bits_count"
+                },
+                {
+                    "name": "parity",
+                    "from": "5",
+                    "size": "3",
+                    "port": "parity_type"
+                },
+                {
+                    "name": "timeout",
+                    "from": "8",
+                    "size": "6",
+                    "port": "timeout_bits"
+                }
+            ]
+        },
+        {
+            "name": "fifo_control",
+            "size": "16",
+            "mode": "rw",
+            "init": "0",
+            "fields": [
+                {
+                    "name": "txfifotr",
+                    "from": "0",
+                    "size": "4",
+                    "port": "txfifotr"
+                },
+                {
+                    "name": "rxfifotr",
+                    "from": "8",
+                    "size": "4",
+                    "port": "rxfifotr"
+                }
+            ]
+        },
+        {
+            "name": "fifo_status",
+            "size": "16",
+            "mode": "ro",
+            "fields": [
+                {
+                    "name": "rx_level",
+                    "from": "0",
+                    "size": "4",
+                    "port": "rx_level"
+                },
+                {
+                    "name": "tx_level",
+                    "from": "8",
+                    "size": "4",
+                    "port": "tx_level"
+                }
+            ]
+        },
+        {
+            "name": "match",
+            "size": "9",
+            "mode": "rw",
+            "init": "0",
+            "fields": [
+                {
+                    "name": "value",
+                    "from": "0",
+                    "size": "9",
+                    "port": "match_data"
+                }
+            ]
+        }
+    ],
+    "interface": [
+        {
+            "name": "RX",
+            "port": "RX",
+            "dir": "input",
+            "size": "1"
+        },
+        {
+            "name": "TX",
+            "port": "TX",
+            "dir": "output",
+            "size": "1"
+        }
+    ],
+    "flags": [
+        {
+            "name": "tx_empty_flag",
+            "port": "tx_empty"
+        },
+        {
+            "name": "rx_full_flag",
+            "port": "rx_full"
+        },
+        {
+            "name": "tx_below_flag",
+            "port": "tx_level_below"
+        },
+        {
+            "name": "rx_above_flag",
+            "port": "rx_level_above"
+        },
+        {
+            "name": "line_break_flag",
+            "port": "break_flag"
+        },
+        {
+            "name": "match_flag",
+            "port": "match_flag"
+        },
+        {
+            "name": "frame_error_flag",
+            "port": "frame_error_flag"
+        },
+        {
+            "name": "parity_error_flag",
+            "port": "parity_error_flag"
+        },
+        {
+            "name": "overrun_flag",
+            "port": "overrun_flag"
+        },
+        {
+            "name": "timeout_flag",
+            "port": "timeout_flag"
+        }
+    ],
+    "clock": "clk",
+    "reset": {
+        "name": "rst_n",
+        "pol": "0"
+    },
+    "ports":[
+      {"name": "prescale", "size": "16"},
+      {"name": "en", "size": "1"},
+      {"name": "tx_en", "size": "1"},
+      {"name": "rx_en", "size": "1"},
+      {"name": "rd", "size": "1"},
+      {"name": "wr", "size": "1"},
+      {"name": "wdata", "size": "9"},
+      {"name": "data_size", "size": "4"},
+      {"name": "stop_bits_count", "size": "1"},
+      {"name": "parity_type", "size": "3"},
+      {"name": "txfifotr", "size": "4"},
+      {"name": "rxfifotr", "size": "4"},
+      {"name": "match_data", "size": "9"},
+      {"name": "timeout_bits", "size": "6"},
+      {"name": "loopback_en", "size": "1"},
+      {"name": "glitch_filter_en", "size": "1"},
+      {"name": "tx_empty", "size": "1"},
+      {"name": "tx_full", "size": "1"},
+      {"name": "tx_level", "size": "4"},
+      {"name": "tx_level_below", "size": "1"},
+      {"name": "rdata", "size": "9"},
+      {"name": "rx_empty", "size": "1"},
+      {"name": "rx_full", "size": "1"},
+      {"name": "rx_level", "size": "4"},
+      {"name": "rx_level_above", "size": "1"},
+      {"name": "break_flag", "size": "1"},
+      {"name": "match_flag", "size": "1"},
+      {"name": "frame_error_flag", "size": "1"},
+      {"name": "parity_error_flag", "size": "1"},
+      {"name": "overrun_flag", "size": "1"},
+      {"name": "timeout_flag", "size": "1"},
+      {"name": "rx", "size": "1"},
+      {"name": "tx", "size": "1"}
+    ],
+
+    "fifos": [
+        {
+            "depth": "16",
+            "width": 9,
+            "reg": "rxdata",
+            "type": "r",
+            "control_port": "rd",
+            "data_port":"rdata"
+        },
+        {
+            "depth": "16",
+            "width": 9,
+            "reg": "txdata",
+            "type": "w",
+            "control_port": "wr",
+            "data_port":"wdata"
+        }
+    ]
+        
+}
